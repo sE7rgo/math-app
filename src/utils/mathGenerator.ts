@@ -20,6 +20,17 @@ const getRandomOperation = (): Operation => {
   return operations[Math.floor(Math.random() * operations.length)];
 };
 
+const getSecondOperandRange = (difficulty: Difficulty): number => {
+  switch (difficulty) {
+    case 'easy':
+      return 10;
+    case 'medium':
+      return 12;
+    case 'hard':
+      return 15;
+  }
+};
+
 export const generateQuestion = (difficulty: Difficulty, operation: Operation): Question => {
   const { min, max } = getDifficultyRange(difficulty);
   const actualOperation = operation === 'mixed' ? getRandomOperation() : operation;
@@ -41,12 +52,12 @@ export const generateQuestion = (difficulty: Difficulty, operation: Operation): 
       break;
     case 'multiplication':
       // For easier multiplication, reduce the range for one number
-      num2 = getRandomNumber(1, difficulty === 'easy' ? 10 : difficulty === 'medium' ? 12 : 15);
+      num2 = getRandomNumber(1, getSecondOperandRange(difficulty));
       answer = num1 * num2;
       break;
     case 'division':
       // Ensure clean division
-      num2 = getRandomNumber(1, difficulty === 'easy' ? 10 : difficulty === 'medium' ? 12 : 15);
+      num2 = getRandomNumber(1, getSecondOperandRange(difficulty));
       answer = getRandomNumber(1, max);
       num1 = num2 * answer; // This ensures clean division
       break;

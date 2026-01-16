@@ -32,8 +32,16 @@ export default function GameScreen({ settings, onRestart }: GameScreenProps) {
 
   useEffect(() => {
     if (timeLeft <= 0) {
-      // Redirect to the specified URL
-      window.location.href = settings.redirectUrl;
+      // Validate and redirect to the specified URL
+      try {
+        const url = new URL(settings.redirectUrl);
+        // Only allow http and https protocols for security
+        if (url.protocol === 'http:' || url.protocol === 'https:') {
+          window.location.assign(settings.redirectUrl);
+        }
+      } catch (error) {
+        console.error('Invalid redirect URL:', error);
+      }
       return;
     }
 
