@@ -1,79 +1,39 @@
-import { Typography } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import { Typography, Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import type { FC } from "react";
 
-
 interface Props {
-    // Props definition
-    active?: boolean;
-    duration?: number;
-    
-    onComplete?: () => void;
-    onDecrement?: (timeLeft: number) => void;
+  onComplete?: () => void;
 }
 
-const Timer: FC<Props> = ({
+const Timer: FC<Props> = ({ onComplete }) => {
+  const [timeLeft, setTimeLeft] = useState<number>(30 * 60); // 30 minutes in seconds
 
-}) => {
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      onComplete?.();
+      return;
+    }
 
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
 
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [duration, setDuration] = useState<number>(30); // default 30 seconds
+    return () => clearInterval(interval);
+  }, [timeLeft, onComplete]);
 
-//   useEffect(() => {
-//     if (!originPageId) return;
-//     setPageId(originPageId);
-//   }, [originPageId]);
-
- 
-//   const { createEvent } = useCreateEventModalMutations({
-//     pageId,
-//     spaceId: viewerContextData?.viewerContext?.space?.id,
-//     onSuccess,
-//     navigateToEvent
-//   });
-
-  // Handlers
-//   const handleCancel = () => {
-//     onClose?.();
-//   };
-
-//   const handleCreateClick = async () => {
-//     setSubmitLoading(true);
-
-//     settingsFormRef?.current?.handleSubmit?.();
-
-//     if (!viewerContextData?.viewerContext.space?.id || !settingsFormRef?.current?.isValid) {
-//       setSubmitLoading(false);
-//       return;
-//     }
-
-//     const { name, description, startsAt, endsAt, page } = settingsFormRef?.current?.values;
-//     setPageId(page?.id);
-
-//     await createEvent({
-//       variables: {
-//         input: {
-//           name,
-//           description,
-//           startsAt: getLocalTimeZoneISO(startsAt),
-//           endsAt: getLocalTimeZoneISO(endsAt),
-//           pageIds: [page?.id]
-//         }
-//       }
-//     });
-
-    // onClose?.();
-
-    
-//   };
-
+  const formatTime = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
-   
-     <Typography variant="h5" gutterBottom>
-        Timer Components
+    <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+      <Typography variant="h2" component="div" fontWeight="bold">
+        {formatTime(timeLeft)}
       </Typography>
+    </Box>
   );
 };
 
