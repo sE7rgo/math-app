@@ -4,6 +4,7 @@ import './App.css';
 import Timer from './components/Timer';
 import Function from './components/Function';
 import Counter from './components/Counter';
+import { Operation } from './components/Function';
 
 type TimerHandle = {
   decreaseTime: (seconds: number) => void;
@@ -14,11 +15,14 @@ function App() {
   const timerRef = useRef<TimerHandle>(null);
 
   const handleCorrectResponse = () => {
+    /* handling correct response, setting correct count, decreasing time by 15 seconds */
+
     setCount(count => ({ ...count, correct: count.correct + 1 }));
     timerRef.current?.decreaseTime(15);
   };
 
   const handleIncorrectResponse = () => {
+    /* handling incorrect response, setting incorrect count */
     setCount(count => ({ ...count, incorrect: count.incorrect + 1 }));
   };
   return (
@@ -26,6 +30,7 @@ function App() {
       <div>
         <Function
           difficulty={1}
+          operation={Operation.Subtraction}
           onCorrect={handleCorrectResponse}
           onIncorrect={handleIncorrectResponse}
         />

@@ -1,39 +1,77 @@
 import { Typography, Box, TextField, Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { FC } from 'react';
-import { useRandomNumber } from '../../utils/getRandomNumber';
+import { generateNumber } from '../../utils/getRandomNumber';
 
-interface Props {
+export enum Operation {
+  Addition = '+',
+  Subtraction = '-',
+  Multiplication = '*',
+  Division = '/',
+}
+
+interface FunctionProps {
   onCorrect?: () => void;
   onIncorrect?: () => void;
   /* Difficulty level of the math problem. Ex 1 -> 1 digit, 2 -> 2 digits, 3 -> 3 digits */
   difficulty?: 1 | 2 | 3;
+  /* Type of math operation to perform */
+  operation?: Operation;
 }
 
-const Function: FC<Props> = ({ onCorrect, onIncorrect, difficulty = 1 }) => {
-  const firstVariable = useRandomNumber(difficulty);
-  const secondVariable = useRandomNumber(difficulty);
-  const [result, setResult] = useState<number | null>(null);
+const Function: FC<FunctionProps> = ({
+  onCorrect,
+  onIncorrect,
+  difficulty = 1,
+  operation = Operation.Addition,
+}) => {
+  const [firstVariable, setFirstVariable] = useState<number>(
+      generateNumber(difficulty)
+    ),
+    [secondVariable, setSecondVariable] = useState<number>(
+      generateNumber(difficulty)
+    ),
+    [userResult, setUserResult] = useState<number | ''>('');
 
-  useEffect(() => {
-    firstVariable.generateNumber();
-    secondVariable.generateNumber();
-  }, []);
+  const getExpectedResult = () => {
+    switch (operation) {
+      case Operation.Addition:
+        return firstVariable + secondVariable;
+      case Operation.Subtraction:
+        return firstVariable - secondVariable;
+      case Operation.Multiplication:
+        return firstVariable * secondVariable;
+      case Operation.Division:
+        return firstVariable / secondVariable;
+      default:
+        return 0;
+    }
+  };
 
   const handleSubmit = () => {
-    if (firstVariable.number + secondVariable.number === result) {
+    if (userResult === getExpectedResult()) {
       onCorrect?.();
     } else {
       onIncorrect?.();
     }
-    // Generate new numbers for next equation
-    firstVariable.generateNumber();
-    secondVariable.generateNumber();
-    setResult(null);
+    /* Generate new numbers for next equation */
+
+    if (
+      operation === Operation.Subtraction ||
+      operation === Operation.Division
+    ) {
+      const variable = generateNumber(difficulty);
+      setFirstVariable(variable);
+      setSecondVariable(generateNumber(difficulty, variable));
+    } else {
+      setFirstVariable(generateNumber(difficulty));
+      setSecondVariable(generateNumber(difficulty));
+    }
+    setUserResult('');
   };
 
   const handleResultChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setResult(Number(event.target.value));
+    setUserResult(Number(event.target.value));
   };
 
   return (
@@ -44,14 +82,14 @@ const Function: FC<Props> = ({ onCorrect, onIncorrect, difficulty = 1 }) => {
       minHeight="200px"
     >
       <Typography variant="h2" component="div" fontWeight="bold">
-        {firstVariable.number} + {secondVariable.number} =
+        {firstVariable} {operation} {secondVariable} =
       </Typography>
       <TextField
         id="outlined-size-small"
         defaultValue=""
         size="small"
         type="number"
-        value={result ?? ''}
+        value={userResult ?? ''}
         onChange={handleResultChange}
       />
       <Button variant="contained" onClick={handleSubmit}>
