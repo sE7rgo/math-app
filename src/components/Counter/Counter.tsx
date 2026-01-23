@@ -2,6 +2,7 @@ import React from 'react';
 import type { FC } from 'react';
 
 import { Box, Typography } from '@mui/material';
+import * as styles from './Counter.styles';
 
 export type CounterProps = {
   correct: number;
@@ -10,11 +11,11 @@ export type CounterProps = {
 
 const Counter: FC<CounterProps> = ({ correct, incorrect }) => {
   return (
-    <Box display="flex" gap={2}>
-      <Typography variant="body1" sx={{ color: 'success.main' }}>
+    <Box sx={styles.containerBox}>
+      <Typography variant="body1" sx={styles.correctTypography}>
         Correct: {correct}
       </Typography>
-      <Typography variant="body1" sx={{ color: 'error.main' }}>
+      <Typography variant="body1" sx={styles.incorrectTypography}>
         Incorrect: {incorrect}
       </Typography>
     </Box>

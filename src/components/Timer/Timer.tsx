@@ -1,5 +1,6 @@
 import { Typography, Box } from '@mui/material';
 import { useImperativeHandle, useEffect, useState, forwardRef } from 'react';
+import * as styles from './Timer.styles';
 
 interface Props {
   onComplete?: () => void;
@@ -41,12 +42,7 @@ const Timer = forwardRef<TimerHandle, Props>(({ onComplete }, ref) => {
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="200px"
-    >
+    <Box sx={styles.containerBox}>
       <Typography variant="h2" component="div" fontWeight="bold">
         {formatTime(timeLeft)}
       </Typography>

@@ -2,6 +2,7 @@ import { Typography, Box, TextField, Button } from '@mui/material';
 import { useState } from 'react';
 import type { FC } from 'react';
 import { generateNumber } from '../../utils/getRandomNumber';
+import * as styles from './Function.styles';
 
 export enum Operation {
   Addition = '+',
@@ -26,12 +27,12 @@ const Function: FC<FunctionProps> = ({
   operation = Operation.Addition,
 }) => {
   const [firstVariable, setFirstVariable] = useState<number>(
-      generateNumber(difficulty)
-    ),
-    [secondVariable, setSecondVariable] = useState<number>(
-      generateNumber(difficulty)
-    ),
-    [userResult, setUserResult] = useState<number | ''>('');
+    generateNumber(difficulty)
+  );
+  const [secondVariable, setSecondVariable] = useState<number>(
+    generateNumber(difficulty)
+  );
+  const [userResult, setUserResult] = useState<number | ''>('');
 
   const getExpectedResult = () => {
     switch (operation) {
@@ -54,8 +55,8 @@ const Function: FC<FunctionProps> = ({
     } else {
       onIncorrect?.();
     }
-    /* Generate new numbers for next equation */
 
+    /* Generate new numbers for next equation */
     if (
       operation === Operation.Subtraction ||
       operation === Operation.Division
@@ -75,12 +76,7 @@ const Function: FC<FunctionProps> = ({
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="200px"
-    >
+    <Box sx={styles.containerBox}>
       <Typography variant="h2" component="div" fontWeight="bold">
         {firstVariable} {operation} {secondVariable} =
       </Typography>

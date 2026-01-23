@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import './App.css';
 import Timer from './components/Timer';
 import Function from './components/Function';
+import FunctionWithCarry from './components/FunctionWithCarry';
 import Counter from './components/Counter';
 import { Operation } from './components/Function';
 
@@ -12,6 +13,7 @@ type TimerHandle = {
 
 function App() {
   const [count, setCount] = useState({ correct: 0, incorrect: 0 });
+  const [difficulty, setDifficulty] = useState<1 | 2 | 3>(2);
   const timerRef = useRef<TimerHandle>(null);
 
   const handleCorrectResponse = () => {
@@ -28,12 +30,21 @@ function App() {
   return (
     <>
       <div>
-        <Function
-          difficulty={1}
-          operation={Operation.Subtraction}
-          onCorrect={handleCorrectResponse}
-          onIncorrect={handleIncorrectResponse}
-        />
+        {difficulty === 1 ? (
+          <Function
+            difficulty={difficulty}
+            operation={Operation.Addition}
+            onCorrect={handleCorrectResponse}
+            onIncorrect={handleIncorrectResponse}
+          />
+        ) : (
+          <FunctionWithCarry
+            difficulty={difficulty}
+            operation={Operation.Addition}
+            onCorrect={handleCorrectResponse}
+            onIncorrect={handleIncorrectResponse}
+          />
+        )}
         <Counter correct={count.correct} incorrect={count.incorrect} />
         <Timer ref={timerRef} />
       </div>
