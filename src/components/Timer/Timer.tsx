@@ -1,6 +1,6 @@
-import { Typography, Box } from "@mui/material";
-import { useEffect, useState } from "react";
-import type { FC } from "react";
+import { Typography, Box } from '@mui/material';
+import { useEffect, useState } from 'react';
+import type { FC } from 'react';
 
 interface Props {
   onComplete?: () => void;
@@ -16,7 +16,7 @@ const Timer: FC<Props> = ({ onComplete }) => {
     }
 
     const interval = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+      setTimeLeft(prev => prev - 1);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -29,7 +29,12 @@ const Timer: FC<Props> = ({ onComplete }) => {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="200px"
+    >
       <Typography variant="h2" component="div" fontWeight="bold">
         {formatTime(timeLeft)}
       </Typography>
