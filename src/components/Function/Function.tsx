@@ -1,7 +1,7 @@
 import { Typography, Box, TextField, Button } from '@mui/material';
 import { useState } from 'react';
 import type { FC } from 'react';
-import { generateNumber } from '../../utils/getRandomNumber';
+import { generateNumber } from '../../utils';
 import * as styles from './Function.styles';
 
 export enum Operation {
@@ -84,8 +84,8 @@ const Function: FC<FunctionProps> = ({
         id="outlined-size-small"
         defaultValue=""
         size="small"
-        type="number"
-        value={userResult ?? ''}
+        type="text"
+        value={userResult}
         onChange={handleResultChange}
       />
       <Button variant="contained" onClick={handleSubmit}>
