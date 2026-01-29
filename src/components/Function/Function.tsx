@@ -1,7 +1,7 @@
 import { Typography, Box, TextField, Button } from '@mui/material';
 import { useState } from 'react';
 import type { FC } from 'react';
-import { generateNumber } from '../../utils';
+import { getRandomNumber } from '../../utils';
 import * as styles from './Function.styles';
 
 export enum Operation {
@@ -27,10 +27,10 @@ const Function: FC<FunctionProps> = ({
   operation = Operation.Addition,
 }) => {
   const [firstVariable, setFirstVariable] = useState<number>(
-    generateNumber(difficulty)
+    getRandomNumber(difficulty)
   );
   const [secondVariable, setSecondVariable] = useState<number>(
-    generateNumber(difficulty)
+    getRandomNumber(difficulty)
   );
   const [userResult, setUserResult] = useState<number | ''>('');
 
@@ -61,12 +61,12 @@ const Function: FC<FunctionProps> = ({
       operation === Operation.Subtraction ||
       operation === Operation.Division
     ) {
-      const variable = generateNumber(difficulty);
+      const variable = getRandomNumber(difficulty);
       setFirstVariable(variable);
-      setSecondVariable(generateNumber(difficulty, variable));
+      setSecondVariable(getRandomNumber(difficulty, variable));
     } else {
-      setFirstVariable(generateNumber(difficulty));
-      setSecondVariable(generateNumber(difficulty));
+      setFirstVariable(getRandomNumber(difficulty));
+      setSecondVariable(getRandomNumber(difficulty));
     }
     setUserResult('');
   };

@@ -4,12 +4,9 @@ import type { FC } from 'react';
 import { Operation } from '../Function/Function';
 import * as styles from './FunctionWithCarry.styles';
 import {
-  generateNumber,
-  getCarries,
-  getDigits,
-  getFormattedResultDigits,
-  getOperationLabel,
+  getNumberArray,
   getOperationResult,
+  getRandomNumber,
   getResultLength,
 } from '../../utils';
 
@@ -27,7 +24,7 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
   operation = Operation.Addition,
 }) => {
   const [firstVariable, setFirstVariable] = useState<number>(
-    generateNumber(difficulty)
+    getRandomNumber(difficulty)
   );
   const [secondVariable, setSecondVariable] = useState<number>();
   const [actualResult, setActualResult] = useState<number>();
@@ -47,9 +44,9 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
       operation === Operation.Addition ||
       operation === Operation.Multiplication
     )
-      setSecondVariable(generateNumber(difficulty));
+      setSecondVariable(getRandomNumber(difficulty));
     else {
-      const secondVariable = generateNumber(difficulty, firstVariable);
+      const secondVariable = getRandomNumber(difficulty, firstVariable);
       setSecondVariable(secondVariable);
     }
   }, [firstVariable]);
@@ -130,9 +127,9 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
   //   setResultInputs(Array(newResultLength).fill(''));
   // };
 
-  const firstVarriableArray = getDigits(firstVariable);
-  const secondVariableArray = getDigits(secondVariable);
-  const actualResultArray = getDigits(actualResult);
+  const firstVarriableArray = getNumberArray(firstVariable);
+  const secondVariableArray = getNumberArray(secondVariable);
+  const actualResultArray = getNumberArray(actualResult);
 
   return (
     <Box sx={styles.containerBox}>
