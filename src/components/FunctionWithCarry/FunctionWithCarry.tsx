@@ -41,21 +41,23 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
   //   Array(resultLength).fill('')
   // );
 
+  /* Setting second variable. Case if subtraction or division, so first number is greater */
   useEffect(() => {
-    /* Need this if subtraction or division, so first number is greater */
     if (
       operation === Operation.Addition ||
       operation === Operation.Multiplication
     )
-      return;
-    const secondVariable = generateNumber(difficulty, firstVariable);
-    setSecondVariable(secondVariable);
+      setSecondVariable(generateNumber(difficulty));
+    else {
+      const secondVariable = generateNumber(difficulty, firstVariable);
+      setSecondVariable(secondVariable);
+    }
   }, [firstVariable]);
 
+  /* Setting actual result based on first and second variables */
   useEffect(() => {
-    if (secondVariable === undefined) return;
+    if (!secondVariable) return;
     const result = getOperationResult(firstVariable, secondVariable, operation);
-
     setActualResult(result);
   }, [secondVariable]);
   useEffect(() => {
