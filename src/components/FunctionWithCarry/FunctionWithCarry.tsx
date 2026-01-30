@@ -28,7 +28,7 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
   );
   const [secondVariable, setSecondVariable] = useState<number>();
   const [actualResult, setActualResult] = useState<number>();
-  const [carryInputs, setCarryInputs] = useState<number[]>();
+  const [userInputs, setUserInputs] = useState<number[]>([]);
   // const [carryInputs, setCarryInputs] = useState<(number | '')[]>(
   //   Array(difficulty - 1).fill('')
   // );
@@ -57,6 +57,7 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
     const result = getOperationResult(firstVariable, secondVariable, operation);
     setActualResult(result);
   }, [secondVariable]);
+
   useEffect(() => {
     if (!actualResult) return;
     console.log(
@@ -66,66 +67,28 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
       actualResult
     );
   }, [actualResult]);
-  const handleInputChange = (result: number, value: string) => {
-    console.log('Input Changed:', result, value);
+  useEffect(() => {
+    console.log('User Inputs:', userInputs);
+  }, [userInputs]);
+  const handleInputChange = (digit: number, idx: number, value: string) => {
+    setUserInputs(prev => {
+      const newInputs = [...prev];
+      newInputs[idx] = Number(value);
+      return newInputs;
+    });
+    console.log('Input Changed:', digit, idx, value);
   };
 
-  // const handleSubmit = () => {
-  //   const result = getOperationResult(firstVariable, secondVariable, operation);
-  //   console.log('Expected Result:', firstVariable, secondVariable, result);
-  //   const expectedDigits = getFormattedResultDigits(
-  //     result,
-  //     difficulty,
-  //     operation
-  //   );
-  //   const expectedCarries = getCarries(
-  //     firstVariable,
-  //     secondVariable,
-  //     difficulty,
-  //     operation
-  //   );
-
-  //   const isResultCorrect = resultInputs.every(
-  //     (val, idx) => val === expectedDigits[idx]
-  //   );
-  //   const areCarriesCorrect = carryInputs.every((val, idx) =>
-  //     expectedCarries[idx] === 0
-  //       ? val === '' || val === 0
-  //       : val === expectedCarries[idx]
-  //   );
-
-  //   (isResultCorrect && areCarriesCorrect ? onCorrect : onIncorrect)?.();
-
-  //   // Reset for next problem
-  //   /* Making sure first number is greater if subtraction or division */
-  //   const needsOrdering =
-  //     operation === Operation.Subtraction || operation === Operation.Division;
-  //   const variable = generateNumber(difficulty);
-  //   const secondVariable = generateNumber(
-  //     difficulty,
-  //     variable ?? (needsOrdering && variable ? variable : undefined)
-  //   );
-  //   const ressettedNumbersResult = getOperationResult(
-  //     variable,
-  //     secondVariable,
-  //     operation
-  //   );
-  //   setFirstVariable(variable);
-  //   await setSecondVariable(secondVariable);
-  //   setActualResult(ressettedNumbersResult);
-  //   console.log(
-  //     'Next Expected Result:',
-  //     variable,
-  //     secondVariable,
-  //     ressettedNumbersResult,
-  //     ressettedNumbersResult
-  //   );
-
-  //   const newResultLength =
-  //     operation === Operation.Multiplication ? difficulty * 2 : difficulty + 1;
-  //   setCarryInputs(Array(difficulty).fill(''));
-  //   setResultInputs(Array(newResultLength).fill(''));
-  // };
+  const handleSubmit = () => {
+    const userResult = Number(userInputs.join(''));
+    if (userResult === actualResult) {
+      onCorrect?.();
+      console.log('Correct Answer:', userResult);
+    } else {
+      onIncorrect?.();
+      console.log('Incorrect Answer:', userResult);
+    }
+  };
 
   const firstVarriableArray = getNumberArray(firstVariable);
   const secondVariableArray = getNumberArray(secondVariable);
@@ -161,12 +124,15 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
 
       <Box sx={styles.numberRowBox}>
         <Box sx={styles.spacerBox} />
-        {actualResultArray?.map((result, idx) => (
+        {actualResultArray?.map((digit, idx) => (
           <TextField
             key={`result-${idx}`}
+            slotProps={{ htmlInput: { maxLength: 1 } }}
             size="small"
             type="text"
-            onChange={event => handleInputChange(result, event.target.value)}
+            onChange={event =>
+              handleInputChange(digit, idx, event.target.value)
+            }
             inputProps={styles.resultInputProps}
             // sx={value =>
             //   value ? styles.correctResultTextField : styles.resultTextField
@@ -177,7 +143,7 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
 
       <Button
         variant="contained"
-        // onClick={handleSubmit}
+        onClick={handleSubmit}
         sx={styles.submitButton}
       >
         Check
