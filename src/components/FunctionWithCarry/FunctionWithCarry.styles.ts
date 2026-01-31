@@ -9,25 +9,8 @@ export const containerBox: SxProps<Theme> = {
   gap: 1,
 };
 
-export const carryRowBox: SxProps<Theme> = {
-  display: 'flex',
-  gap: 1,
-  alignItems: 'center',
-  minHeight: '50px',
-};
-
 export const spacerBox: SxProps<Theme> = {
   width: '30px',
-};
-
-export const carryTextField: SxProps<Theme> = {
-  width: '50px',
-};
-
-export const carryInputProps = {
-  style: { textAlign: 'center' as const, fontSize: '14px', width: '30px' },
-  min: 0,
-  max: 9,
 };
 
 export const numberRowBox: SxProps<Theme> = {
@@ -58,10 +41,14 @@ export const resultTextField: SxProps<Theme> = {
   width: '50px',
 };
 
-export const resultInputProps = {
-  style: { textAlign: 'center' as const, fontSize: '20px', width: '30px' },
-  min: 0,
-  max: 9,
+export const correctResultTextField: SxProps<Theme> = {
+  width: '50px',
+  backgroundColor: '#a5d6a7', // Light green background for correct answers
+};
+
+export const wrongResultTextField: SxProps<Theme> = {
+  width: '50px',
+  backgroundColor: '#fd0303', // Light red background for incorrect answers
 };
 
 export const submitButton: SxProps<Theme> = {

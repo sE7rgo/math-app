@@ -1,5 +1,5 @@
 import { Typography, Box, TextField, Button } from '@mui/material';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { FC } from 'react';
 import { Operation } from '../Function/Function';
 import * as styles from './FunctionWithCarry.styles';
@@ -7,7 +7,6 @@ import {
   getNumberArray,
   getOperationResult,
   getRandomNumber,
-  getResultLength,
 } from '../../utils';
 
 interface FunctionWithCarryProps {
@@ -133,10 +132,13 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
             onChange={event =>
               handleInputChange(digit, idx, event.target.value)
             }
-            inputProps={styles.resultInputProps}
-            // sx={value =>
-            //   value ? styles.correctResultTextField : styles.resultTextField
-            // }
+            sx={
+              userInputs[idx] === undefined
+                ? styles.resultTextField
+                : userInputs[idx] === digit
+                  ? styles.correctResultTextField
+                  : styles.wrongResultTextField
+            }
           />
         ))}
       </Box>
