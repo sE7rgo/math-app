@@ -25,29 +25,27 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
   const [firstVariable, setFirstVariable] = useState<number>(
     getRandomNumber(difficulty)
   );
+  const [firstVariableArray, setFirstVariableArray] = useState<number[]>([]);
   const [secondVariable, setSecondVariable] = useState<number>();
+  const [secondVariableArray, setSecondVariableArray] = useState<number[]>([]);
   const [actualResult, setActualResult] = useState<number>();
+  const [actualResultArray, setActualResultArray] = useState<number[]>([]);
   const [userInputs, setUserInputs] = useState<number[]>([]);
-  // const [carryInputs, setCarryInputs] = useState<(number | '')[]>(
-  //   Array(difficulty - 1).fill('')
-  // );
-  // const resultLength =
-  //   operation === Operation.Multiplication ? difficulty * 2 : difficulty + 1;
-  // const [resultInputs, setResultInputs] = useState<(number | '')[]>(
-  //   Array(resultLength).fill('')
-  // );
+
+  // const firstVarriableArray = getNumberArray(firstVariable);
+  // const secondVariableArray = getNumberArray(secondVariable);
+  // const actualResultArray = getNumberArray(actualResult);
 
   /* Setting second variable. Case if subtraction or division, so first number is greater */
   useEffect(() => {
-    if (
-      operation === Operation.Addition ||
-      operation === Operation.Multiplication
-    )
-      setSecondVariable(getRandomNumber(difficulty));
-    else {
-      const secondVariable = getRandomNumber(difficulty, firstVariable);
-      setSecondVariable(secondVariable);
-    }
+    const organizeNumbers =
+      operation === Operation.Subtraction || operation === Operation.Division;
+    setSecondVariable(
+      organizeNumbers
+        ? getRandomNumber(difficulty, firstVariable)
+        : getRandomNumber(difficulty)
+    );
+    setFirstVariableArray(getNumberArray(firstVariable));
   }, [firstVariable]);
 
   /* Setting actual result based on first and second variables */
@@ -55,6 +53,8 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
     if (!secondVariable) return;
     const result = getOperationResult(firstVariable, secondVariable, operation);
     setActualResult(result);
+    setSecondVariableArray(getNumberArray(secondVariable));
+    setActualResultArray(getNumberArray(result));
   }, [secondVariable]);
 
   useEffect(() => {
@@ -87,17 +87,19 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
       onIncorrect?.();
       console.log('Incorrect Answer:', userResult);
     }
+    resetNumbers();
   };
 
-  const firstVarriableArray = getNumberArray(firstVariable);
-  const secondVariableArray = getNumberArray(secondVariable);
-  const actualResultArray = getNumberArray(actualResult);
+  const resetNumbers = () => {
+    setFirstVariable(getRandomNumber(difficulty));
+    setUserInputs([]);
+  };
 
   return (
     <Box sx={styles.containerBox}>
       <Box sx={styles.numberRowBox}>
         <Box sx={styles.spacerBox} />
-        {firstVarriableArray.map((digit, key) => (
+        {firstVariableArray.map((digit, key) => (
           <Box key={`num1-${key}`} sx={styles.digitBox}>
             {digit}
           </Box>
