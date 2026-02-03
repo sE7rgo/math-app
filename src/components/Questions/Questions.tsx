@@ -21,24 +21,27 @@ export interface QuestionsFormValues {
 }
 
 interface QuestionsProps {
-  onSubmit?: (values: QuestionsFormValues) => void;
+  setDifficulty: (difficulty: Difficulty) => void;
+  setOperation: (operation: Operation) => void;
+  setLink: (link: string) => void;
+  onSubmit?: () => void;
 }
 
-const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
-  const [difficulty, setDifficulty] = useState<Difficulty>(2);
-  const [counterTime, setCounterTime] = useState<CounterTime>(60);
-  const [operation, setOperation] = useState<Operation>(Operation.Addition);
-  const [link, setLink] = useState('');
-
+const Questions: FC<QuestionsProps> = ({
+  setDifficulty,
+  setOperation,
+  setLink,
+  onSubmit,
+}) => {
   const handleSubmit = () => {
-    onSubmit?.({ difficulty, counterTime, operation, link: link.trim() });
+    onSubmit?.();
   };
 
   return (
     <Paper elevation={2} sx={{ p: 3, maxWidth: 480, mx: 'auto' }}>
       <Stack spacing={3}>
         <Typography variant="h6" textAlign="center">
-          Game Settings
+          Lets configure your game before starting!
         </Typography>
 
         <Box>
@@ -49,7 +52,7 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
             {[1, 2, 3].map(level => (
               <Button
                 key={level}
-                variant={difficulty === level ? 'contained' : 'outlined'}
+                // variant={difficulty === level ? 'contained' : 'outlined'}
                 onClick={() => setDifficulty(level as Difficulty)}
                 fullWidth
               >
@@ -61,14 +64,14 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
 
         <Box>
           <Typography variant="subtitle2" sx={{ mb: 1 }}>
-            Counter Time (seconds)
+            Counter Time (minutes)
           </Typography>
           <Stack direction="row" spacing={1}>
-            {[30, 60, 90].map(time => (
+            {[10, 20, 30].map(time => (
               <Button
                 key={time}
-                variant={counterTime === time ? 'contained' : 'outlined'}
-                onClick={() => setCounterTime(time as CounterTime)}
+                // variant={counterTime === time ? 'contained' : 'outlined'}
+                // onClick={() => setCounterTime(time as CounterTime)}
                 fullWidth
               >
                 {time}
@@ -85,7 +88,7 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
             {Object.values(Operation).map(value => (
               <Button
                 key={value}
-                variant={operation === value ? 'contained' : 'outlined'}
+                // variant={operation === value ? 'contained' : 'outlined'}
                 onClick={() => setOperation(value)}
                 fullWidth
               >
@@ -99,7 +102,7 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
           label="Insert Link"
           placeholder="https://example.com"
           type="url"
-          value={link}
+          //   value={link}
           onChange={event => setLink(event.target.value)}
           fullWidth
         />
