@@ -34,6 +34,13 @@ function App() {
     /* handling incorrect response, setting incorrect count */
     setCount(count => ({ ...count, incorrect: count.incorrect + 1 }));
   };
+
+  const handleTimerComplete = () => {
+    /* handling timer complete, redirecter to whatever link */
+    const targetLink = link.trim();
+    if (!targetLink) return;
+    window.location.href = targetLink;
+  };
   return !started ? (
     <Questions
       setDifficulty={setDifficulty}
@@ -59,7 +66,7 @@ function App() {
         />
       )}
       <Counter correct={count.correct} incorrect={count.incorrect} />
-      <Timer ref={timerRef} />
+      <Timer ref={timerRef} onComplete={handleTimerComplete} />
     </Box>
   );
 }
