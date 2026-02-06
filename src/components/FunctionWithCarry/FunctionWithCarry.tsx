@@ -32,10 +32,6 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
   const [actualResultArray, setActualResultArray] = useState<number[]>([]);
   const [userInputs, setUserInputs] = useState<number[]>([]);
 
-  // const firstVarriableArray = getNumberArray(firstVariable);
-  // const secondVariableArray = getNumberArray(secondVariable);
-  // const actualResultArray = getNumberArray(actualResult);
-
   /* Setting second variable. Case if subtraction or division, so first number is greater */
   useEffect(() => {
     const organizeNumbers =
@@ -131,6 +127,7 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
             slotProps={{ htmlInput: { maxLength: 1 } }}
             size="small"
             type="text"
+            value={userInputs[idx] !== undefined ? userInputs[idx] : ''}
             onChange={event =>
               handleInputChange(digit, idx, event.target.value)
             }
