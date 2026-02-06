@@ -6,12 +6,13 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
 import type { FC } from 'react';
 import { Operation } from '../Function';
-
-type Difficulty = 1 | 2 | 3;
-type CounterTime = 30 | 60 | 90;
+import {
+  useGameSettings,
+  type CounterTime,
+  type Difficulty,
+} from '../../context/GameSettingsContext';
 
 export interface QuestionsFormValues {
   difficulty: Difficulty;
@@ -21,18 +22,21 @@ export interface QuestionsFormValues {
 }
 
 interface QuestionsProps {
-  setDifficulty: (difficulty: Difficulty) => void;
-  setOperation: (operation: Operation) => void;
-  setLink: (link: string) => void;
-  onSubmit?: () => void;
+  onSubmit: () => void;
 }
 
-const Questions: FC<QuestionsProps> = ({
-  setDifficulty,
-  setOperation,
-  setLink,
-  onSubmit,
-}) => {
+const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
+  const {
+    difficulty,
+    initialTime,
+    operation,
+    link,
+    setDifficulty,
+    setOperation,
+    setLink,
+    setInitialTime,
+  } = useGameSettings();
+
   const handleSubmit = () => {
     onSubmit?.();
   };
@@ -52,7 +56,7 @@ const Questions: FC<QuestionsProps> = ({
             {[1, 2, 3].map(level => (
               <Button
                 key={level}
-                // variant={difficulty === level ? 'contained' : 'outlined'}
+                variant={difficulty === level ? 'contained' : 'outlined'}
                 onClick={() => setDifficulty(level as Difficulty)}
                 fullWidth
               >
@@ -70,8 +74,8 @@ const Questions: FC<QuestionsProps> = ({
             {[10, 20, 30].map(time => (
               <Button
                 key={time}
-                // variant={counterTime === time ? 'contained' : 'outlined'}
-                // onClick={() => setCounterTime(time as CounterTime)}
+                variant={initialTime === time ? 'contained' : 'outlined'}
+                onClick={() => setInitialTime(time as CounterTime)}
                 fullWidth
               >
                 {time}
@@ -88,7 +92,7 @@ const Questions: FC<QuestionsProps> = ({
             {Object.values(Operation).map(value => (
               <Button
                 key={value}
-                // variant={operation === value ? 'contained' : 'outlined'}
+                variant={operation === value ? 'contained' : 'outlined'}
                 onClick={() => setOperation(value)}
                 fullWidth
               >
@@ -100,9 +104,9 @@ const Questions: FC<QuestionsProps> = ({
 
         <TextField
           label="Insert Link"
-          placeholder="https://example.com"
+          placeholder="https://example.com/some-page/some-video"
           type="url"
-          //   value={link}
+          value={link}
           onChange={event => setLink(event.target.value)}
           fullWidth
         />
