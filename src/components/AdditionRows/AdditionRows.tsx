@@ -18,18 +18,16 @@ const AdditionRows: FC<AdditionRowsProps> = ({
 }) => {
   const [userInputs, setUserInputs] = useState<UserInputs>({});
 
+  /* Generating multiplication rows based on digits of second variable */
   const multiplicationRows = secondVariableArray.reverse().map((digit, key) => {
-    console.log('Digit:', digit, firstVariable, firstVariable * digit);
     const array = getNumberArray(firstVariable * digit);
     if (key > 0) {
       for (let i = 0; i < key; i++) {
-        console.log('iiiiiiiii', i, key);
         /* Adding -1 as placeholder for empty spaces in multiplication rows */
         array.push(-1);
       }
     }
-    console.log('Array for digit', digit, ':', array);
-    return array;
+    return array.reverse();
   });
   // const multiplicationRows = [...secondVariableArray]
   // .reverse()
@@ -46,9 +44,7 @@ const AdditionRows: FC<AdditionRowsProps> = ({
         [idx]: value === '' ? '' : Number(value),
       },
     }));
-    console.log('Input Changed:', idx, value, 'in row', rowIdx);
   };
-  console.log('Multiplication Rows:', multiplicationRows);
 
   return (
     <Box sx={styles.containerBox}>

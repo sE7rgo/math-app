@@ -8,6 +8,7 @@ import {
   getOperationResult,
   getRandomNumber,
 } from '../../utils';
+import AdditionRows from '../AdditionRows';
 
 interface FunctionWithCarryProps {
   onCorrect?: () => void;
@@ -53,25 +54,12 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
     setActualResultArray(getNumberArray(result));
   }, [secondVariable]);
 
-  useEffect(() => {
-    if (!actualResult) return;
-    console.log(
-      'Expected Result:',
-      firstVariable,
-      secondVariable,
-      actualResult
-    );
-  }, [actualResult]);
-  useEffect(() => {
-    console.log('User Inputs:', userInputs);
-  }, [userInputs]);
   const handleInputChange = (digit: number, idx: number, value: string) => {
     setUserInputs(prev => {
       const newInputs = [...prev];
       newInputs[idx] = Number(value);
       return newInputs;
     });
-    console.log('Input Changed:', digit, idx, value);
   };
 
   const handleSubmit = () => {
@@ -118,6 +106,15 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
           operation === Operation.Multiplication ? difficulty * 2 : difficulty
         )}
       />
+      {operation === Operation.Multiplication && difficulty > 1 && (
+        <Box sx={styles.numberRowBox}>
+          <AdditionRows
+            firstVariable={firstVariable}
+            firstVariableArray={firstVariableArray}
+            secondVariableArray={secondVariableArray}
+          />
+        </Box>
+      )}
 
       <Box sx={styles.numberRowBox}>
         <Box sx={styles.spacerBox} />
