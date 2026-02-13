@@ -11,6 +11,7 @@ import {
   GameSettingsProvider,
   useGameSettings,
 } from './context/GameSettingsContext';
+import { useColorScheme } from '@mui/material/styles';
 
 type TimerHandle = {
   decreaseTime: (seconds: number) => void;
@@ -29,6 +30,11 @@ function AppContent() {
   const [count, setCount] = useState({ correct: 0, incorrect: 0 });
   const { difficulty, operation, link, initialTime } = useGameSettings();
   const timerRef = useRef<TimerHandle>(null);
+
+  const { mode, setMode } = useColorScheme();
+  if (!mode) {
+    return null;
+  }
 
   const handleStart = () => setStarted(true);
 
