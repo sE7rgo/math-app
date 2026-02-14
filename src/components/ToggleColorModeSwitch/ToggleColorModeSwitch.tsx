@@ -9,12 +9,12 @@ import { type FC } from 'react';
 import * as styles from './ToggleColorModeSwitch.styles';
 
 interface ToggleColorModeSwitchProps {
-  mode: 'light' | 'dark';
+  mode: 'light' | 'dark' | 'system' | undefined;
   setMode: (mode: 'light' | 'dark') => void;
 }
 
 const ToggleColorModeSwitch: FC<ToggleColorModeSwitchProps> = ({
-  mode,
+  mode = 'light',
   setMode,
 }) => {
   return (

@@ -7,10 +7,8 @@ import FunctionWithCarry from './components/FunctionWithCarry';
 import Counter from './components/Counter';
 import * as styles from './App.styles';
 import Questions from './components/Questions';
-import {
-  GameSettingsProvider,
-  useGameSettings,
-} from './context/GameSettingsContext';
+import { useGameSettings } from './context/GameSettingsContext';
+import AppBar from './components/AppBar';
 import { useColorScheme } from '@mui/material/styles';
 
 type TimerHandle = {
@@ -18,23 +16,12 @@ type TimerHandle = {
 };
 
 function App() {
-  return (
-    <GameSettingsProvider>
-      <AppContent />
-    </GameSettingsProvider>
-  );
-}
-
-function AppContent() {
   const [started, setStarted] = useState(false);
   const [count, setCount] = useState({ correct: 0, incorrect: 0 });
   const { difficulty, operation, link, initialTime } = useGameSettings();
   const timerRef = useRef<TimerHandle>(null);
 
   const { mode, setMode } = useColorScheme();
-  if (!mode) {
-    return null;
-  }
 
   const handleStart = () => setStarted(true);
 
@@ -55,32 +42,37 @@ function AppContent() {
     if (!targetLink) return;
     window.location.href = targetLink;
   };
-  return !started ? (
-    <Questions onSubmit={() => handleStart()} />
-  ) : (
-    <Box sx={styles.rootContainer}>
-      {difficulty === 1 ? (
-        <Function
-          difficulty={difficulty}
-          operation={operation}
-          onCorrect={handleCorrectResponse}
-          onIncorrect={handleIncorrectResponse}
-        />
+  return (
+    <>
+      <AppBar mode={mode} setMode={setMode} />
+      {!started ? (
+        <Questions onSubmit={() => handleStart()} />
       ) : (
-        <FunctionWithCarry
-          difficulty={difficulty}
-          operation={operation}
-          onCorrect={handleCorrectResponse}
-          onIncorrect={handleIncorrectResponse}
-        />
+        <Box sx={styles.rootContainer}>
+          {difficulty === 1 ? (
+            <Function
+              difficulty={difficulty}
+              operation={operation}
+              onCorrect={handleCorrectResponse}
+              onIncorrect={handleIncorrectResponse}
+            />
+          ) : (
+            <FunctionWithCarry
+              difficulty={difficulty}
+              operation={operation}
+              onCorrect={handleCorrectResponse}
+              onIncorrect={handleIncorrectResponse}
+            />
+          )}
+          <Counter correct={count.correct} incorrect={count.incorrect} />
+          <Timer
+            ref={timerRef}
+            onComplete={handleTimerComplete}
+            initialTime={initialTime}
+          />
+        </Box>
       )}
-      <Counter correct={count.correct} incorrect={count.incorrect} />
-      <Timer
-        ref={timerRef}
-        onComplete={handleTimerComplete}
-        initialTime={initialTime}
-      />
-    </Box>
+    </>
   );
 }
 
