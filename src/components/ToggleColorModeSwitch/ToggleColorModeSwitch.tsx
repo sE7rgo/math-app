@@ -1,10 +1,4 @@
-import {
-  Box,
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from '@mui/material';
+import { FormControl, FormControlLabel, Switch } from '@mui/material';
 import { type FC } from 'react';
 import * as styles from './ToggleColorModeSwitch.styles';
 
@@ -18,18 +12,17 @@ const ToggleColorModeSwitch: FC<ToggleColorModeSwitchProps> = ({
   setMode,
 }) => {
   return (
-    <Box sx={styles.containerBox}>
-      <FormControl>
-        <RadioGroup
-          row
-          value={mode}
-          onChange={event => setMode(event.target.value as 'light' | 'dark')}
-        >
-          <FormControlLabel value="light" control={<Radio />} label="Light" />
-          <FormControlLabel value="dark" control={<Radio />} label="Dark" />
-        </RadioGroup>
-      </FormControl>
-    </Box>
+    <FormControl>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={mode === 'dark'}
+            onChange={event => setMode(event.target.checked ? 'dark' : 'light')}
+          />
+        }
+        label={mode === 'dark' ? 'Dark' : 'Light'}
+      />
+    </FormControl>
   );
 };
 
