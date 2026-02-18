@@ -26,6 +26,12 @@ interface QuestionsProps {
   onSubmit: () => void;
 }
 
+enum DifficultyLevel {
+  Easy = 1,
+  Medium = 2,
+  Hard = 3,
+}
+
 const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
   const {
     difficulty,
@@ -45,40 +51,40 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
   return (
     <Stack spacing={4} sx={styles.stackContainer}>
       <Typography variant="h6" textAlign="center">
-        Quick pit stop before the fun begins!
+        Some parameters before we start:
       </Typography>
 
       <Box>
-        <Typography variant="subtitle2" sx={{ mb: 1 }}>
-          Difficulty
-        </Typography>
         <Stack direction="row" spacing={1}>
-          {[1, 2, 3].map(level => (
+          {[
+            DifficultyLevel.Easy,
+            DifficultyLevel.Medium,
+            DifficultyLevel.Hard,
+          ].map(level => (
             <Button
               key={level}
-              variant={difficulty === level ? 'contained' : 'outlined'}
+              variant={'text'}
+              color={difficulty === level ? 'success' : 'primary'}
               onClick={() => setDifficulty(level as Difficulty)}
               fullWidth
             >
-              {level}
+              {DifficultyLevel[level]}
             </Button>
           ))}
         </Stack>
       </Box>
 
       <Box>
-        <Typography variant="subtitle2" sx={{ mb: 1 }}>
-          Counter Time (minutes)
-        </Typography>
         <Stack direction="row" spacing={1}>
           {[10, 20, 30].map(time => (
             <Button
               key={time}
-              variant={initialTime === time ? 'contained' : 'outlined'}
+              variant={'text'}
+              color={initialTime === time ? 'success' : 'primary'}
               onClick={() => setInitialTime(time as CounterTime)}
               fullWidth
             >
-              {time}
+              {time + ' minutes'}
             </Button>
           ))}
         </Stack>
@@ -89,7 +95,8 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
           {Object.values(Operation).map(value => (
             <Button
               key={value}
-              variant={operation === value ? 'contained' : 'outlined'}
+              variant={'text'}
+              color={operation === value ? 'success' : 'primary'}
               onClick={() => setOperation(value)}
               fullWidth
             >
@@ -100,16 +107,22 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
       </Box>
 
       <TextField
-        label="Insert Link"
+        label="Your link belongs here"
         placeholder="https://example.com/some-page/some-video"
         type="url"
         value={link}
         onChange={event => setLink(event.target.value)}
         fullWidth
+        variant="standard"
       />
 
-      <Button variant="contained" onClick={handleSubmit}>
-        Start
+      <Button
+        variant="text"
+        size="large"
+        color="secondary"
+        onClick={handleSubmit}
+      >
+        Begin
       </Button>
     </Stack>
   );
