@@ -9,6 +9,12 @@ export const containerBox: SxProps<Theme> = {
   padding: 2,
 };
 
+export const getHorizontalLine = (difficulty: number): SxProps<Theme> => ({
+  width: `${(difficulty + 1) * 58}px`,
+  borderTop: '2px solid black',
+  marginY: 0.5,
+});
+
 export const boardBox: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'column',
@@ -67,13 +73,7 @@ export const getPartialResultTextField = (shift: number): SxProps<Theme> => ({
 });
 
 export const resultTextField: SxProps<Theme> = {
-  width: '180px',
-  '& .MuiInputBase-input': {
-    textAlign: 'right',
-    color: 'primary.main',
-    fontWeight: 700,
-    paddingY: '8px',
-  },
+  width: '50px',
 };
 
 export const correctResultTextField: SxProps<Theme> = {
