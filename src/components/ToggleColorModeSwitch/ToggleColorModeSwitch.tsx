@@ -1,6 +1,5 @@
 import { FormControl, FormControlLabel, Switch } from '@mui/material';
 import { type FC } from 'react';
-import * as styles from './ToggleColorModeSwitch.styles';
 
 interface ToggleColorModeSwitchProps {
   mode: 'light' | 'dark' | 'system' | undefined;
