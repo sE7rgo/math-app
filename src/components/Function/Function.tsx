@@ -1,5 +1,5 @@
 import { Typography, Box, TextField, Button } from '@mui/material';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import type { FC } from 'react';
 import { getRandomNumber } from '../../utils';
 import * as styles from './Function.styles';
@@ -82,13 +82,14 @@ const Function: FC<FunctionProps> = ({
       </Typography>
       <TextField
         id="outlined-size-small"
+        sx={styles.textField}
         defaultValue=""
-        size="small"
+        size="medium"
         type="text"
         value={userResult}
         onChange={handleResultChange}
       />
-      <Button variant="contained" onClick={handleSubmit}>
+      <Button variant="text" onClick={handleSubmit}>
         Check
       </Button>
     </Box>

@@ -117,7 +117,6 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
       )}
 
       <Box sx={styles.numberRowBox}>
-        <Box sx={styles.spacerBox} />
         {actualResultArray?.map((digit, idx) => (
           <TextField
             key={`result-${idx}`}

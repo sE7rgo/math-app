@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import type { FC } from 'react';
 import { Operation } from '../Function';
 import {
@@ -50,7 +43,7 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
 
   return (
     <Stack spacing={4} sx={styles.stackContainer}>
-      <Typography variant="h6" textAlign="center">
+      <Typography fontFamily={'Bungee'} variant="h6" textAlign="center">
         Some parameters before we start:
       </Typography>
 
@@ -67,6 +60,7 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
               color={difficulty === level ? 'success' : 'primary'}
               onClick={() => setDifficulty(level as Difficulty)}
               fullWidth
+              sx={styles.questionButton}
             >
               {DifficultyLevel[level]}
             </Button>
@@ -83,6 +77,7 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
               color={initialTime === time ? 'success' : 'primary'}
               onClick={() => setInitialTime(time as CounterTime)}
               fullWidth
+              sx={styles.questionButton}
             >
               {time + ' minutes'}
             </Button>
@@ -99,6 +94,7 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
               color={operation === value ? 'success' : 'primary'}
               onClick={() => setOperation(value)}
               fullWidth
+              sx={styles.questionButton}
             >
               {value}
             </Button>
@@ -121,6 +117,7 @@ const Questions: FC<QuestionsProps> = ({ onSubmit }) => {
         size="large"
         color="secondary"
         onClick={handleSubmit}
+        sx={styles.questionButton}
       >
         Begin
       </Button>

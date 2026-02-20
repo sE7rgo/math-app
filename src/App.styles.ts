@@ -1,10 +1,29 @@
 import type { SxProps, Theme } from '@mui/material';
 
 export const rootContainer: SxProps<Theme> = {
-  maxWidth: '1280px',
   margin: '0 auto',
-  padding: '2rem',
-  textAlign: 'center',
+  marginTop: '64px',
+  position: 'relative',
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  minHeight: 'calc(100vh - 64px)',
+};
+
+export const counterBox: SxProps<Theme> = {};
+
+export const timerBox: SxProps<Theme> = {
+  position: 'absolute',
+  right: 16,
+  top: 8,
+};
+
+export const equationBox: SxProps<Theme> = {
+  flex: 1,
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 export const logo: SxProps<Theme> = {

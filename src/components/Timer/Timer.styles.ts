@@ -4,7 +4,7 @@ export const containerBox: SxProps<Theme> = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  minHeight: '200px',
+  minHeight: 'auto',
 };
 
 export const typography: SxProps<Theme> = {

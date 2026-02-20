@@ -11,4 +11,9 @@ export const stackContainer: SxProps<Theme> = {
   width: '100%',
   maxWidth: 480,
   mx: 'auto',
+  fontFamily: '"Bungee", sans-serif',
+};
+
+export const questionButton: SxProps<Theme> = {
+  fontFamily: '"Bungee", sans-serif',
 };

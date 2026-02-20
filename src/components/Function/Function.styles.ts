@@ -7,6 +7,12 @@ export const containerBox: SxProps<Theme> = {
   minHeight: '200px',
 };
 
+export const textField: SxProps<Theme> = {
+  marginLeft: 2,
+  marginRight: 2,
+  width: '5em',
+};
+
 export const typography: SxProps<Theme> = {
   variant: 'h2',
   component: 'div',

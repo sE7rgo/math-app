@@ -49,27 +49,31 @@ function App() {
         <Questions onSubmit={() => handleStart()} />
       ) : (
         <Box sx={styles.rootContainer}>
-          {difficulty === 1 ? (
-            <Function
-              difficulty={difficulty}
-              operation={operation}
-              onCorrect={handleCorrectResponse}
-              onIncorrect={handleIncorrectResponse}
+          <Box sx={styles.rightCornerBox}>
+            <Timer
+              ref={timerRef}
+              onComplete={handleTimerComplete}
+              initialTime={initialTime}
             />
-          ) : (
-            <FunctionWithCarry
-              difficulty={difficulty}
-              operation={operation}
-              onCorrect={handleCorrectResponse}
-              onIncorrect={handleIncorrectResponse}
-            />
-          )}
-          <Counter correct={count.correct} incorrect={count.incorrect} />
-          <Timer
-            ref={timerRef}
-            onComplete={handleTimerComplete}
-            initialTime={initialTime}
-          />
+            <Counter correct={count.correct} incorrect={count.incorrect} />
+          </Box>
+          <Box sx={styles.equationBox}>
+            {difficulty === 1 ? (
+              <Function
+                difficulty={difficulty}
+                operation={operation}
+                onCorrect={handleCorrectResponse}
+                onIncorrect={handleIncorrectResponse}
+              />
+            ) : (
+              <FunctionWithCarry
+                difficulty={difficulty}
+                operation={operation}
+                onCorrect={handleCorrectResponse}
+                onIncorrect={handleIncorrectResponse}
+              />
+            )}
+          </Box>
         </Box>
       )}
     </>

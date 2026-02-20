@@ -39,13 +39,26 @@ export const typography = {
   body2: {
     fontWeight: 500,
   },
-  fontFamily: ['Montserrat', '"Open Sans"', 'Arial', 'sans-serif'].join(','),
+  fontFamily: [
+    '"Shadows Into Light"',
+    '"Bungee"',
+    '"Open Sans"',
+    'Arial',
+    'sans-serif',
+  ].join(','),
   fontSize: 14,
   htmlFontSize: 16,
 };
 
 const theme = createTheme({
-  colorSchemes: { light: true, dark: true },
+  colorSchemes: {
+    light: {
+      palette: defaultPalette,
+    },
+    dark: {
+      palette: darkPalette,
+    },
+  },
   cssVariables: {
     colorSchemeSelector: 'class',
   },
