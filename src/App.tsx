@@ -49,13 +49,12 @@ function App() {
         <Questions onSubmit={() => handleStart()} />
       ) : (
         <Box sx={styles.rootContainer}>
-          <Box sx={styles.rightCornerBox}>
+          <Box sx={styles.timerBox}>
             <Timer
               ref={timerRef}
               onComplete={handleTimerComplete}
               initialTime={initialTime}
             />
-            <Counter correct={count.correct} incorrect={count.incorrect} />
           </Box>
           <Box sx={styles.equationBox}>
             {difficulty === 1 ? (
@@ -73,6 +72,9 @@ function App() {
                 onIncorrect={handleIncorrectResponse}
               />
             )}
+          </Box>
+          <Box sx={styles.counterBox}>
+            <Counter correct={count.correct} incorrect={count.incorrect} />
           </Box>
         </Box>
       )}
