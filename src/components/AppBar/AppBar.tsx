@@ -9,7 +9,11 @@ interface AppBarProps {
   title?: string;
 }
 
-const AppBar: FC<AppBarProps> = ({ mode, setMode, title = 'Math App' }) => {
+const AppBar: FC<AppBarProps> = ({
+  mode,
+  setMode,
+  title = '3.141592653589793238462643383279502884197169399375105820974944592307816406286 2089986280348253421170679821480',
+}) => {
   return (
     <MuiAppBar enableColorOnDark sx={styles.appBarBox}>
       <Typography variant="h6">{title}</Typography>
