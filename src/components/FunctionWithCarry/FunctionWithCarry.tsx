@@ -54,7 +54,7 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
     setActualResultArray(getNumberArray(result));
   }, [secondVariable]);
 
-  const handleInputChange = (digit: number, idx: number, value: string) => {
+  const handleInputChange = (idx: number, value: string) => {
     setUserInputs(prev => {
       const newInputs = [...prev];
       newInputs[idx] = Number(value);
@@ -124,9 +124,7 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
             size="small"
             type="text"
             value={userInputs[idx] !== undefined ? userInputs[idx] : ''}
-            onChange={event =>
-              handleInputChange(digit, idx, event.target.value)
-            }
+            onChange={event => handleInputChange(idx, event.target.value)}
             sx={
               userInputs[idx] === undefined
                 ? styles.resultTextField

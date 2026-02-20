@@ -1,5 +1,5 @@
 import { Typography, Box, TextField, Button } from '@mui/material';
-import { use, useState } from 'react';
+import { useState } from 'react';
 import type { FC } from 'react';
 import { getRandomNumber } from '../../utils';
 import * as styles from './Function.styles';

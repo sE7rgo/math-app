@@ -1,5 +1,5 @@
 import { Box, TextField, Typography } from '@mui/material';
-import { useEffect, useState, type FC } from 'react';
+import { useState, type FC } from 'react';
 import * as styles from './AdditionRows.styles';
 import { getNumberArray } from '../../utils';
 import { Operation } from '../Function';
