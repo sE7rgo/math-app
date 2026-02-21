@@ -28,10 +28,10 @@ const GameSettingsContext = createContext<GameSettingsContextValue | undefined>(
 );
 
 export const GameSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [difficulty, setDifficulty] = useState<Difficulty>(2);
-  const [operation, setOperation] = useState<Operation>(Operation.Subtraction);
+  const [difficulty, setDifficulty] = useState<Difficulty>(1);
+  const [operation, setOperation] = useState<Operation>(Operation.Addition);
   const [link, setLink] = useState('');
-  const [initialTime, setInitialTime] = useState<CounterTime>(30);
+  const [initialTime, setInitialTime] = useState<CounterTime>(10);
 
   return (
     <GameSettingsContext.Provider

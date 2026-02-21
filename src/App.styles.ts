@@ -1,13 +1,26 @@
 import type { SxProps, Theme } from '@mui/material';
 
+export const appLayout: SxProps<Theme> = {
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+};
+
+export const pageContent: SxProps<Theme> = {
+  flex: 1,
+  paddingTop: '64px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+};
+
 export const rootContainer: SxProps<Theme> = {
   margin: '0 auto',
-  marginTop: '64px',
   position: 'relative',
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  minHeight: 'calc(100vh - 64px)',
+  flex: 1,
 };
 
 export const counterBox: SxProps<Theme> = {};

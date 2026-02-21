@@ -10,6 +10,7 @@ import Questions from './components/Questions';
 import { useGameSettings } from './context/GameSettingsContext';
 import AppBar from './components/AppBar';
 import { useColorScheme } from '@mui/material/styles';
+import Footer from './components/Footer';
 
 type TimerHandle = {
   decreaseTime: (seconds: number) => void;
@@ -43,42 +44,45 @@ function App() {
     window.location.href = targetLink;
   };
   return (
-    <>
+    <Box sx={styles.appLayout}>
       <AppBar mode={mode} setMode={setMode} />
-      {!started ? (
-        <Questions onSubmit={() => handleStart()} />
-      ) : (
-        <Box sx={styles.rootContainer}>
-          <Box sx={styles.timerBox}>
-            <Timer
-              ref={timerRef}
-              onComplete={handleTimerComplete}
-              initialTime={initialTime}
-            />
-          </Box>
-          <Box sx={styles.equationBox}>
-            {difficulty === 1 ? (
-              <Function
-                difficulty={difficulty}
-                operation={operation}
-                onCorrect={handleCorrectResponse}
-                onIncorrect={handleIncorrectResponse}
+      <Box sx={styles.pageContent}>
+        {!started ? (
+          <Questions onSubmit={() => handleStart()} />
+        ) : (
+          <Box sx={styles.rootContainer}>
+            <Box sx={styles.timerBox}>
+              <Timer
+                ref={timerRef}
+                onComplete={handleTimerComplete}
+                initialTime={initialTime}
               />
-            ) : (
-              <FunctionWithCarry
-                difficulty={difficulty}
-                operation={operation}
-                onCorrect={handleCorrectResponse}
-                onIncorrect={handleIncorrectResponse}
-              />
-            )}
+            </Box>
+            <Box sx={styles.equationBox}>
+              {difficulty === 1 ? (
+                <Function
+                  difficulty={difficulty}
+                  operation={operation}
+                  onCorrect={handleCorrectResponse}
+                  onIncorrect={handleIncorrectResponse}
+                />
+              ) : (
+                <FunctionWithCarry
+                  difficulty={difficulty}
+                  operation={operation}
+                  onCorrect={handleCorrectResponse}
+                  onIncorrect={handleIncorrectResponse}
+                />
+              )}
+            </Box>
+            <Box sx={styles.counterBox}>
+              <Counter correct={count.correct} incorrect={count.incorrect} />
+            </Box>
           </Box>
-          <Box sx={styles.counterBox}>
-            <Counter correct={count.correct} incorrect={count.incorrect} />
-          </Box>
-        </Box>
-      )}
-    </>
+        )}
+      </Box>
+      <Footer />
+    </Box>
   );
 }
 

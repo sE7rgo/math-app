@@ -19,7 +19,7 @@ export const colors = {
   error: '#d03110',
 
   // Warning
-  warning: '#ff9800',
+  warning: '#1a9778',
 
   // Info
   info: '#4a8ca9',
