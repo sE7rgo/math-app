@@ -1,13 +1,13 @@
 import { Typography, Box, TextField, Button } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { FC } from 'react';
-import { getRandomNumber } from '../../utils';
+import { getOperationResult, getRandomNumber } from '../../utils';
 import * as styles from './Function.styles';
 
 export enum Operation {
   Addition = '+',
   Subtraction = '-',
-  Multiplication = '*',
+  Multiplication = 'x',
   Division = '/',
 }
 
@@ -29,46 +29,41 @@ const Function: FC<FunctionProps> = ({
   const [firstVariable, setFirstVariable] = useState<number>(
     getRandomNumber(difficulty)
   );
-  const [secondVariable, setSecondVariable] = useState<number>(
-    getRandomNumber(difficulty)
-  );
-  const [userResult, setUserResult] = useState<number | ''>('');
+  const [secondVariable, setSecondVariable] = useState<number>();
+  const [actualResult, setActualResult] = useState<number>();
+  const [userResult, setUserResult] = useState<number>();
 
-  const getExpectedResult = () => {
-    switch (operation) {
-      case Operation.Addition:
-        return firstVariable + secondVariable;
-      case Operation.Subtraction:
-        return firstVariable - secondVariable;
-      case Operation.Multiplication:
-        return firstVariable * secondVariable;
-      case Operation.Division:
-        return firstVariable / secondVariable;
-      default:
-        return 0;
-    }
+  /* Setting second variable. Case if subtraction or division, so first number is greater */
+  useEffect(() => {
+    const organizeNumbers =
+      operation === Operation.Subtraction || operation === Operation.Division;
+    setSecondVariable(
+      organizeNumbers
+        ? getRandomNumber(difficulty, firstVariable)
+        : getRandomNumber(difficulty)
+    );
+  }, [firstVariable]);
+
+  useEffect(() => {
+    if (!secondVariable) return;
+    const result = getOperationResult(firstVariable, secondVariable, operation);
+    setActualResult(result);
+  }, [secondVariable]);
+
+  const resetNumbers = () => {
+    setFirstVariable(getRandomNumber(difficulty));
+    setUserResult(undefined);
   };
 
   const handleSubmit = () => {
-    if (userResult === getExpectedResult()) {
+    if (userResult === actualResult) {
       onCorrect?.();
     } else {
       onIncorrect?.();
     }
 
     /* Generate new numbers for next equation */
-    if (
-      operation === Operation.Subtraction ||
-      operation === Operation.Division
-    ) {
-      const variable = getRandomNumber(difficulty);
-      setFirstVariable(variable);
-      setSecondVariable(getRandomNumber(difficulty, variable));
-    } else {
-      setFirstVariable(getRandomNumber(difficulty));
-      setSecondVariable(getRandomNumber(difficulty));
-    }
-    setUserResult('');
+    resetNumbers();
   };
 
   const handleResultChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,11 +77,17 @@ const Function: FC<FunctionProps> = ({
       </Typography>
       <TextField
         id="outlined-size-small"
-        sx={styles.textField}
+        sx={
+          userResult === undefined
+            ? styles.textField
+            : userResult === actualResult
+              ? styles.correctResultTextField
+              : styles.wrongResultTextField
+        }
         defaultValue=""
-        size="medium"
-        type="text"
-        value={userResult}
+        size="small"
+        type="number"
+        value={userResult === undefined ? '' : userResult}
         onChange={handleResultChange}
       />
       <Button variant="text" onClick={handleSubmit}>

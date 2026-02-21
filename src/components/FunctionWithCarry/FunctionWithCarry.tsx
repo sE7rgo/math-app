@@ -120,9 +120,9 @@ const FunctionWithCarry: FC<FunctionWithCarryProps> = ({
         {actualResultArray?.map((digit, idx) => (
           <TextField
             key={`result-${idx}`}
+            type={'number'}
             slotProps={{ htmlInput: { maxLength: 1 } }}
             size="small"
-            type="text"
             value={userInputs[idx] !== undefined ? userInputs[idx] : ''}
             onChange={event => handleInputChange(idx, event.target.value)}
             sx={

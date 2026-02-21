@@ -48,6 +48,8 @@ export const extraRowsContainer: SxProps<Theme> = {
 
 export const resultTextField: SxProps<Theme> = {
   width: '50px',
+  fontFamily: 'Shadows Into Light,',
+  fontWeight: 'bold',
 };
 
 export const correctResultTextField: SxProps<Theme> = {
