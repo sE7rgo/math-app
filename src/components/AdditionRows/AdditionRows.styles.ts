@@ -76,6 +76,11 @@ export const resultTextField: SxProps<Theme> = {
   width: '50px',
 };
 
+export const emptyCellBox: SxProps<Theme> = {
+  width: '50px',
+  height: '40px',
+};
+
 export const correctResultTextField: SxProps<Theme> = {
   width: '50px',
   backgroundColor: '#a5d6a7', // Light green background for correct answers
@@ -87,5 +92,5 @@ export const wrongResultTextField: SxProps<Theme> = {
 };
 export const operatorTypography: SxProps<Theme> = {
   width: '30px',
-  textAlign: 'center',
+  textAlign: 'left',
 };

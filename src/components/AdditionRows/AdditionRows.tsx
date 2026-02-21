@@ -44,38 +44,46 @@ const AdditionRows: FC<AdditionRowsProps> = ({
     <Box sx={styles.numberColumnBox}>
       {multiplicationRows.reverse().map((array, arrayIdx) => (
         <Box sx={styles.numberRowBox} key={`row-${arrayIdx}`}>
-          {array.map((digit, digitIdx) => (
-            <TextField
-              key={`result-${arrayIdx}-${digitIdx}`}
-              slotProps={{ htmlInput: { maxLength: 1 } }}
-              size="small"
-              type="text"
-              variant={digit === -1 ? 'filled' : 'outlined'}
-              disabled={digit === -1}
-              value={
-                userInputs[arrayIdx] !== undefined &&
-                userInputs[arrayIdx][digitIdx] !== undefined
-                  ? userInputs[arrayIdx][digitIdx]
-                  : ''
-              }
-              onChange={event =>
-                handleRowInputChange(digitIdx, event.target.value, arrayIdx)
-              }
-              sx={
-                userInputs[arrayIdx] === undefined ||
-                userInputs[arrayIdx][digitIdx] === undefined
-                  ? styles.resultTextField
-                  : userInputs[arrayIdx][digitIdx] === digit
-                    ? styles.correctResultTextField
-                    : styles.wrongResultTextField
-              }
-            />
-          ))}
+          {arrayIdx === multiplicationRows.length - 1 && (
+            <Typography variant="h5" sx={styles.operatorTypography}>
+              {Operation.Addition}
+            </Typography>
+          )}
+          {array.map((digit, digitIdx) =>
+            digit === -1 ? (
+              <Box
+                key={`result-${arrayIdx}-${digitIdx}`}
+                sx={styles.emptyCellBox}
+              />
+            ) : (
+              <TextField
+                key={`result-${arrayIdx}-${digitIdx}`}
+                slotProps={{ htmlInput: { maxLength: 1 } }}
+                size="small"
+                type="number"
+                variant="outlined"
+                value={
+                  userInputs[arrayIdx] !== undefined &&
+                  userInputs[arrayIdx][digitIdx] !== undefined
+                    ? userInputs[arrayIdx][digitIdx]
+                    : ''
+                }
+                onChange={event =>
+                  handleRowInputChange(digitIdx, event.target.value, arrayIdx)
+                }
+                sx={
+                  userInputs[arrayIdx] === undefined ||
+                  userInputs[arrayIdx][digitIdx] === undefined
+                    ? styles.resultTextField
+                    : userInputs[arrayIdx][digitIdx] === digit
+                      ? styles.correctResultTextField
+                      : styles.wrongResultTextField
+                }
+              />
+            )
+          )}
         </Box>
       ))}
-      <Typography variant="h5" sx={styles.operatorTypography}>
-        {Operation.Addition}
-      </Typography>
       <Box sx={styles.getHorizontalLine(firstVariableArray.length * 2)} />
     </Box>
   );
